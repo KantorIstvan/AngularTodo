@@ -7,12 +7,32 @@
   margin-bottom: 2rem;
 }
 
+/* Responsive padding for the container */
+@media (max-width: 768px) {
+  .todo-container {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .todo-container {
+    padding: 1rem;
+  }
+}
+
 /* Header styles */
 h1 {
   font-size: 2rem;
   color: var(--primary-color);
   margin-bottom: 1.5rem;
   font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
 }
 
 /* Form styles */
@@ -56,6 +76,7 @@ button {
   font-weight: 500;
   font-size: 1rem;
   transition: all 0.2s ease;
+  min-height: 44px; /* Ensure good touch target size */
 }
 
 button[type="submit"] {
@@ -84,9 +105,26 @@ li {
   border: 1px solid var(--border-color);
   transition: all 0.2s ease;
   box-shadow: var(--shadow-sm);
-  flex-wrap: nowrap;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
   min-height: 60px;
   height: auto; /* Allow height to grow */
+}
+
+/* Make todo items stack on small screens */
+@media (max-width: 480px) {
+  li {
+    flex-direction: column;
+  }
+
+  .todo-content {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .todo-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 .todo-description {
@@ -118,6 +156,18 @@ li {
   flex-shrink: 0; /* Prevent buttons from shrinking */
   margin-left: 10px; /* Add some space between text and buttons */
   align-self: center; /* Center buttons vertically */
+}
+
+/* Make buttons full width on small screens */
+@media (max-width: 480px) {
+  .todo-actions {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .todo-actions button {
+    flex: 1; /* Make buttons take equal width */
+  }
 }
 
 /* Make sure the checkbox doesn't stretch */
@@ -202,6 +252,7 @@ li {
   align-items: center;
   z-index: 1000;
   animation: fadeIn 0.2s ease-out;
+  padding: 1rem; /* Add padding to ensure modal doesn't touch edges on mobile */
 }
 
 @keyframes fadeIn {
@@ -217,10 +268,17 @@ li {
   background-color: var(--card-bg);
   padding: 2rem;
   border-radius: var(--radius);
-  min-width: 400px;
-  max-width: 90%;
+  min-width: min(400px, 95vw); /* Responsive width */
+  max-width: 95%;
+  width: 100%; /* Take full width on mobile */
   box-shadow: var(--shadow-lg);
   animation: slideIn 0.3s ease-out;
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 1.5rem;
+  }
 }
 
 @keyframes slideIn {
@@ -244,6 +302,16 @@ li {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+  }
 }
 
 .empty-state {
