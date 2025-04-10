@@ -1,6 +1,6 @@
 /* Container styles */
 .todo-container {
-  background-color: var(--card-bg);
+  background-color: var(--card dazu-bg);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 2rem;
@@ -110,6 +110,14 @@ li {
   height: auto; /* Allow height to grow */
 }
 
+/* Modern hover effect for todo items */
+li:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--shadow);
+  border-color: var(--primary-color);
+  background-color: rgba(249, 250, 251, 0.95);
+}
+
 /* Make todo items stack on small screens */
 @media (max-width: 480px) {
   li {
@@ -124,6 +132,19 @@ li {
   .todo-actions {
     width: 100%;
     justify-content: flex-end;
+    flex-direction: column !important;
+    align-items: stretch;
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .todo-actions button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .todo-actions button:last-child {
+    margin-bottom: 0;
   }
 }
 
@@ -158,66 +179,10 @@ li {
   align-self: center; /* Center buttons vertically */
 }
 
-/* Make buttons full width on small screens */
-@media (max-width: 480px) {
-  .todo-actions {
-    margin-left: 0;
-    margin-top: 0.5rem;
-  }
-
-  .todo-actions button {
-    flex: 1; /* Make buttons take equal width */
-  }
-}
-
-/* Make sure the checkbox doesn't stretch */
-.todo-checkbox {
-  width: 30px !important; /* Force the width with !important */
-  height: 30px !important; /* Force the height with !important */
-  min-width: 16px !important; /* Prevent browser minimums */
-  min-height: 16px !important; /* Prevent browser minimums */
-  max-width: 30px !important; /* Ensure maximum size */
-  max-height: 30px !important; /* Ensure maximum size */
-  border: 1px solid var(--border-color);
-  border-radius: 100%;
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  cursor: pointer;
-  margin-right: 10px;
-  flex-shrink: 0;
-  position: relative;
-  background-color: white;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.todo-checkbox:checked {
-  background-color: var(--secondary-color);
-  border-color: var(--secondary-color);
-}
-
-.todo-checkbox:checked::after {
-  content: "";
-  display: block;
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid white;
-  border-bottom: 2px solid white;
-  transform: rotate(-45deg);
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  margin-top: -4px;
-  margin-left: -5px;
-}
-
 .todo-content {
   display: flex;
   gap: 1.25rem;
-  align-items: center; /* Changed from flex-start to center for vertical alignment */
+  align-items: center; /* Center items vertically */
   flex: 1;
 }
 
@@ -252,7 +217,7 @@ li {
   align-items: center;
   z-index: 1000;
   animation: fadeIn 0.2s ease-out;
-  padding: 1rem; /* Add padding to ensure modal doesn't touch edges on mobile */
+  padding: 1rem; /* Add padding for mobile */
 }
 
 @keyframes fadeIn {
@@ -270,7 +235,7 @@ li {
   border-radius: var(--radius);
   min-width: min(400px, 95vw); /* Responsive width */
   max-width: 95%;
-  width: 100%; /* Take full width on mobile */
+  width: 100%; /* Full width on mobile */
   box-shadow: var(--shadow-lg);
   animation: slideIn 0.3s ease-out;
 }
@@ -323,4 +288,24 @@ li {
 .empty-state-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
+}
+.todo-checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+  accent-color: var(--secondary-color);
+  cursor: pointer;
+  margin-right: 0.75rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.todo-checkbox:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .todo-checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 }
