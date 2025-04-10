@@ -1,7 +1,20 @@
 .app-container {
-  padding: 2rem;
+  padding: 2rem 1rem;
   max-width: 800px;
   margin: 0 auto;
+}
+
+/* Media queries for different device sizes */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 1rem 0.5rem;
+  }
 }
 
 .app-header {
@@ -13,6 +26,12 @@
   font-size: 2.5rem;
   color: var(--primary-color);
   margin-bottom: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 2rem;
+  }
 }
 
 .app-subtitle {
