@@ -1,0 +1,75 @@
+<div class="todo-container">
+  <h1>TODO List</h1>
+
+  <form (submit)="addTodo()">
+    <div class="form-group">
+      <input
+        [(ngModel)]="newTodo.title"
+        name="title"
+        placeholder="What needs to be done?"
+        required
+      />
+      <button type="submit">Add Task</button>
+    </div>
+    <input
+      [(ngModel)]="newTodo.description"
+      name="description"
+      placeholder="Add description (optional)"
+    />
+  </form>
+
+  <div *ngIf="todos.length === 0" class="empty-state">
+    <div class="empty-state-icon">📋</div>
+    <p>No tasks yet. Add a new task above!</p>
+  </div>
+
+  <ul *ngIf="todos.length > 0">
+    <li *ngFor="let todo of todos" [ngClass]="{ completed: todo.completed }">
+      <div class="todo-content">
+        <input
+          type="checkbox"
+          class="todo-checkbox"
+          [checked]="todo.completed"
+          (change)="toggleComplete(todo)"
+        />
+        <div class="todo-text">
+          <h3 class="todo-title">{{ todo.title }}</h3>
+          <p class="todo-description" *ngIf="todo.description">
+            {{ todo.description }}
+          </p>
+          <p class="todo-description" *ngIf="!todo.description">
+            No description
+          </p>
+        </div>
+      </div>
+      <div class="todo-actions">
+        <button class="btn-update" (click)="openUpdateModal(todo)">Edit</button>
+        <button class="btn-delete" (click)="deleteTodo(todo.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Modal for updating todo -->
+<div class="modal" *ngIf="showUpdateModal">
+  <div class="modal-content">
+    <h2>Update Todo</h2>
+    <form (submit)="updateTodo()">
+      <input
+        [(ngModel)]="editingTodo.title"
+        name="editTitle"
+        placeholder="Title"
+        required
+      />
+      <input
+        [(ngModel)]="editingTodo.description"
+        name="editDescription"
+        placeholder="Description"
+      />
+      <div class="modal-buttons">
+        <button type="button" (click)="closeUpdateModal()">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
