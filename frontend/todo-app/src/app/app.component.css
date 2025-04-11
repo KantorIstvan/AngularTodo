@@ -18,8 +18,11 @@
 }
 
 .app-header {
-  text-align: center;
-  margin-bottom: 2rem;
+  text-align: right;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .app-title {

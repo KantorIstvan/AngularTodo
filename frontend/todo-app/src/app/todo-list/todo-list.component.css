@@ -1,5 +1,5 @@
 .todo-container {
-  background-color: var(--card dazu-bg);
+  background-color: var(--card-bg);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 2rem;
