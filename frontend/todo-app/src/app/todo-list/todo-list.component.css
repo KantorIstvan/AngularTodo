@@ -44,9 +44,38 @@ form {
   gap: 1rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .form-group {
-    flex-direction: column;
+    display: contents;
+    margin-bottom: 0;
+  }
+
+  form {
+    gap: 1rem;
+  }
+
+  input[name="title"] {
+    order: 1;
+    width: 100%;
+  }
+
+  input[name="description"] {
+    order: 2;
+    width: 100%;
+  }
+
+  form .form-group button {
+    order: 3;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  form > input[name="description"] {
+    order: unset;
+  }
+
+  .form-group input {
+    width: 100%;
   }
 }
 
