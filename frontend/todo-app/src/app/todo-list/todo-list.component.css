@@ -45,37 +45,36 @@ form {
 }
 
 @media (max-width: 480px) {
+  /* Restructure form for mobile */
   .form-group {
-    display: contents;
-    margin-bottom: 0;
+    display: contents !important; /* Flatten the form-group */
+    margin-bottom: 0 !important;
   }
 
   form {
     gap: 1rem;
   }
 
+  /* Explicit order control */
   input[name="title"] {
-    order: 1;
+    order: 1 !important; /* Title first */
     width: 100%;
   }
 
   input[name="description"] {
-    order: 2;
+    order: 2 !important; /* Description second */
     width: 100%;
   }
 
   form .form-group button {
-    order: 3;
+    order: 3 !important; /* Button third */
     width: 100%;
     margin-top: 0;
   }
 
+  /* Remove redundant styles */
   form > input[name="description"] {
-    order: unset;
-  }
-
-  .form-group input {
-    width: 100%;
+    order: unset; /* Reset any previous order */
   }
 }
 
@@ -328,6 +327,6 @@ li:hover {
 
 @media (max-width: 480px) {
   .todo-checkbox {
-    transform: scale(1.5);
+    transform: scale(1.2) !important;
   }
 }
