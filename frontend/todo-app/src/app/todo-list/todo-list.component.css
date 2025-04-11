@@ -58,6 +58,8 @@ input {
   flex: 1;
   transition: all 0.2s ease;
   outline: none;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
 }
 
 input:focus {
@@ -92,7 +94,7 @@ ul {
 li {
   padding: 1rem 1.25rem;
   border-radius: var(--radius);
-  background-color: white;
+  background-color: var(--card-bg);
   margin-bottom: 1rem;
   display: flex;
   align-items: flex-start;
@@ -109,7 +111,7 @@ li:hover {
   transform: translateY(-3px) scale(1.01);
   box-shadow: var(--shadow);
   border-color: var(--primary-color);
-  background-color: rgba(249, 250, 251, 0.95);
+  background-color: var(--bg-color);
 }
 
 @media (max-width: 480px) {
