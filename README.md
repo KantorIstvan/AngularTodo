@@ -54,7 +54,7 @@ The components are containerized with Docker for easy deployment.
    ```bash
    npm install
    ```
-3. Set up PostgreSQL and update the `.env` file with your database connection string
+3. Set up PostgreSQL and create the `.env` file with your database connection string
 4. Start the server:
    ```bash
    node server.js
