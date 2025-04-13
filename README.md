@@ -28,6 +28,7 @@ The components are containerized with Docker for easy deployment.
 
 - Responsive design that works on mobile and desktop
 - Light/dark theme toggle with system preference detection
+- Comprehensive API testing with Jest and Supertest
 - Containerized deployment with Docker
 
 ## Setup Instructions
@@ -84,7 +85,8 @@ The components are containerized with Docker for easy deployment.
 │   ├── .env               # Environment variables (keep this secure!)
 │   ├── Dockerfile         # Backend Docker configuration
 │   ├── package.json       # Backend dependencies
-│   └── server.js          # Express server implementation
+│   ├── server.js          # Express server implementation
+│   └── server.test.js     # API endpoint tests
 └── frontend/
     └── todo-app/          # Angular application
         ├── Dockerfile     # Frontend Docker configuration
@@ -100,13 +102,14 @@ The components are containerized with Docker for easy deployment.
   - Angular 19
   - RxJS
   - CSS Custom Properties for theming
-  - Responsive design
+  - Responsive design with mobile optimization
 
 - **Backend**:
 
   - Express.js
   - PostgreSQL with node-postgres
   - CORS support
+  - Jest & Supertest for API testing
 
 - **DevOps**:
   - Docker and Docker Compose
@@ -120,6 +123,13 @@ To run frontend tests:
 
 ```bash
 cd frontend/todo-app
+npm test
+```
+
+To run backend tests:
+
+```bash
+cd backend
 npm test
 ```
 
