@@ -82,7 +82,6 @@ The components are containerized with Docker for easy deployment.
 ```
 ├── docker-compose.yml     # Docker compose configuration
 ├── backend/               # Node.js Express API
-│   ├── .env               # Environment variables (keep this secure!)
 │   ├── Dockerfile         # Backend Docker configuration
 │   ├── package.json       # Backend dependencies
 │   ├── server.js          # Express server implementation
