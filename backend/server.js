@@ -85,7 +85,9 @@ app.delete("/api/todos/:id", async (req, res) => {
   }
 });
 
-// Start server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Backend running on port ${port}`);
 });
+
+exports.app = app;
+module.exports = { app, server };
