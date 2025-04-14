@@ -64,4 +64,42 @@ describe('TodoService', () => {
     expect(req.request.body).toEqual(newTodo);
     req.flush(mockResponse);
   });
+
+  it('should update a todo', () => {
+    const todoId = 1;
+    const updatedTodo: Partial<Todo> = {
+      title: 'Updated Todo',
+      description: 'Updated Description',
+      completed: true,
+    };
+    const mockResponse: Todo = {
+      id: todoId,
+      title: 'Updated Todo',
+      description: 'Updated Description',
+      completed: true,
+      created_at: '2023-01-01',
+      updated_at: '2023-01-02',
+    };
+
+    service.updateTodo(todoId, updatedTodo).subscribe((todo) => {
+      expect(todo).toEqual(mockResponse);
+    });
+
+    const req = httpMock.expectOne(`/api/todos/${todoId}`);
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toEqual(updatedTodo);
+    req.flush(mockResponse);
+  });
+
+  it('should delete a todo', () => {
+    const todoId = 1;
+
+    service.deleteTodo(todoId).subscribe((response) => {
+      expect(response).toBeNull();
+    });
+
+    const req = httpMock.expectOne(`/api/todos/${todoId}`);
+    expect(req.request.method).toBe('DELETE');
+    req.flush(null, { status: 204, statusText: 'No Content' });
+  });
 });
