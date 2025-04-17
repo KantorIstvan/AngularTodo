@@ -31,6 +31,27 @@ The components are containerized with Docker for easy deployment.
 - Comprehensive API testing with Jest and Supertest
 - Containerized deployment with Docker
 
+## Authentication System
+
+The application implements a complete JWT-based authentication system:
+
+- **User Registration**: New users can create accounts with username, email, and password
+- **Secure Login**: Authentication using email/password with JWT tokens
+- **Password Security**: All passwords are hashed with bcrypt before storage
+- **Protected Routes**: Angular route guards (`AuthGuard`, `NoAuthGuard`) control access to pages
+- **Token Management**: Automatic token handling via HTTP interceptors
+- **Persistent Sessions**: Authentication state persists across page refreshes
+
+### Authentication Flow
+
+1. User registers or logs in via the respective forms
+2. Backend validates credentials and issues a JWT token
+3. Frontend stores the token in localStorage
+4. Subsequent API requests automatically include the token in headers
+5. Protected routes check authentication status before allowing access
+
+![alt text](/images/image-5.png)
+
 ## Setup Instructions
 
 ### Using Docker (Recommended)
