@@ -13,6 +13,7 @@ services:
       - JWT_SECRET=asdasdasd
     depends_on:
       - db
+    restart: on-failure
   db:
     image: postgres:13
     environment:
