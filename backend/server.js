@@ -2,7 +2,7 @@ const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const bcryptjs = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("./middleware/auth");
 
@@ -18,43 +18,42 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-pool
-  .query(
-    `
-  CREATE TABLE IF NOT EXISTS todos (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    completed BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP
-  )
-`
-  )
-  .then(() => console.log("Table created or already exists"));
+async function initializeDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS todos (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        completed BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP
+      )
+    `);
+    console.log("Todos table created or already exists");
 
-pool
-  .query(
-    `
-    CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,
-      username VARCHAR(255) NOT NULL UNIQUE,
-      email VARCHAR(255) NOT NULL UNIQUE,
-      password VARCHAR(255) NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-  `
-  )
-  .then(() => console.log("Users table created or already exists"));
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) NOT NULL UNIQUE,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log("Users table created or already exists");
 
-pool
-  .query(
-    `
-    ALTER TABLE todos
-    ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id)
-    `
-  )
-  .then(() => console.log("Added user_id to todos table"));
+    await pool.query(`
+      ALTER TABLE todos
+      ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id)
+    `);
+    console.log("Added user_id to todos table");
+  } catch (err) {
+    console.error("Database initialization error:", err);
+  }
+}
+
+initializeDatabase();
 
 app.get("/api/todos", authMiddleware, async (req, res) => {
   try {
@@ -149,8 +148,18 @@ app.post("/api/users/register", async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    let salt;
+    let hashedPassword;
+
+    try {
+      salt = await bcrypt.genSalt(10);
+      hashedPassword = await bcrypt.hash(password, salt);
+    } catch (hashError) {
+      console.error("Password hashing error:", hashError);
+      return res
+        .status(500)
+        .json({ error: "Error creating account. Please try again." });
+    }
 
     const result = await pool.query(
       "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email",
@@ -178,7 +187,8 @@ app.post("/api/users/register", async (req, res) => {
       }
     );
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Registration error:", err);
+    res.status(500).json({ error: "Server error. Please try again later." });
   }
 });
 
