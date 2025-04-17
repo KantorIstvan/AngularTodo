@@ -33,7 +33,29 @@ pool
   )
   .then(() => console.log("Table created or already exists"));
 
-// Routes
+pool
+  .query(
+    `
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(255) NOT NULL UNIQUE,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      password VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `
+  )
+  .then(() => console.log("Users table created or already exists"));
+
+pool
+  .query(
+    `
+    ALTER TABLE todos
+    ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id)
+    `
+  )
+  .then(() => console.log("Added user_id to todos table"));
+
 app.get("/api/todos", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM todos");
